@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>员工服务平台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1890ff',
+                        secondary: '#666666',
+                        accent: '#ff4d4f',
+                        neutral: '#f5f5f5',
+                        'neutral-dark': '#333333',
+                    },
+                    fontFamily: {
+                        sans: ['PingFang SC', 'Helvetica Neue', 'Arial', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'card': '0 2px 8px rgba(0, 0, 0, 0.1)',
+                    }
+                },
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .scrollbar-hide {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+            .text-balance {
+                text-wrap: balance;
+            }
+        }
+    </style>
+</head>
+<body class="bg-neutral text-neutral-dark font-sans">
+    <div class="max-w-md mx-auto bg-white min-h-screen relative flex flex-col">
+        <!-- 状态栏 -->
+        <div class="flex justify-between items-center px-4 py-2 text-sm text-neutral-dark">
+            <span id="current-time">16:05</span>
+            <span id="battery">74%</span>
+        </div>
+        
+        <!-- 搜索栏 -->
+        <div class="px-4 py-3">
+            <div class="relative">
+                <input type="text" class="w-full py-2 pl-10 pr-4 rounded-full bg-neutral border border-gray-100 focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="搜索">
+                <i class="fa fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            </div>
+        </div>
+        
+        <!-- 文章轮播区 -->
+        <div class="relative px-4 pb-4 overflow-hidden">
+            <div id="articleSlider" class="flex transition-transform duration-500 ease-in-out space-x-4">
+                <div class="min-w-full rounded-xl overflow-hidden shadow-card">
+                    <div class="relative h-48">
+                        <img src="https://picsum.photos/seed/article1/800/400" alt="中国移动劳动模范周志龙" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                            <h3 class="text-white p-4 font-bold text-lg">身边的榜样 | 记中国移动劳动模范周志龙</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="min-w-full rounded-xl overflow-hidden shadow-card">
+                    <div class="relative h-48">
+                        <img src="https://picsum.photos/seed/article2/800/400" alt="公司数字化转型" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                            <h3 class="text-white p-4 font-bold text-lg">公司数字化转型战略与实施路径</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="min-w-full rounded-xl overflow-hidden shadow-card">
+                    <div class="relative h-48">
+                        <img src="https://picsum.photos/seed/article3/800/400" alt="员工培训计划" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                            <h3 class="text-white p-4 font-bold text-lg">2025年度员工技能提升培训计划</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                <button class="w-2 h-2 rounded-full bg-white opacity-100 slider-dot active" data-index="0"></button>
+                <button class="w-2 h-2 rounded-full bg-white opacity-50 slider-dot" data-index="1"></button>
+                <button class="w-2 h-2 rounded-full bg-white opacity-50 slider-dot" data-index="2"></button>
+            </div>
+            <button id="prevSlide" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/30 hover:bg-white/50 text-white w-8 h-8 rounded-full flex items-center justify-center transition-all">
+                <i class="fa fa-angle-left"></i>
+            </button>
+            <button id="nextSlide" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/30 hover:bg-white/50 text-white w-8 h-8 rounded-full flex items-center justify-center transition-all">
+                <i class="fa fa-angle-right"></i>
+            </button>
+        </div>
+        
+        <!-- 洗衣服务模块 -->
+        <div class="px-4 py-3 bg-white">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="font-bold text-lg">洗衣服务</h2>
+                <span class="text-primary text-sm">更多服务</span>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <a href="#小程序://依美特/FJyJ9XWz4CjhCRj" class="todo-item flex flex-col items-center p-4 rounded-xl shadow-sm hover:shadow-md transition-all bg-white border border-gray-100" target="_blank">
+                    <div class="w-14 h-14 rounded-xl bg-blue-50 flex items-center justify-center mb-3">
+                        <i class="fa fa-washer text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-base font-medium text-neutral-dark">伊美特洗衣</h3>
+                    <p class="text-xs text-secondary mt-1">专业洗护，次日送达</p>
+                </a>
+                <a href="#小程序://利群洗衣/EVwgQYfZZCTslOd" class="todo-item flex flex-col items-center p-4 rounded-xl shadow-sm hover:shadow-md transition-all bg-white border border-gray-100" target="_blank">
+                    <div class="w-14 h-14 rounded-xl bg-blue-50 flex items-center justify-center mb-3">
+                        <i class="fa fa-tint text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-base font-medium text-neutral-dark">利群洗衣</h3>
+                    <p class="text-xs text-secondary mt-1">品牌保障，高质服务</p>
+                </a>
+            </div>
+        </div>
+        
+        <!-- 通知公告 -->
+        <div class="px-4 py-3 bg-white mt-3">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="font-bold text-lg">通知公告</h2>
+                <span class="text-primary text-sm">查看全部</span>
+            </div>
+            <div class="space-y-3">
+                <div class="notice-item p-3 rounded-lg hover:bg-neutral transition-colors">
+                    <h3 class="text-base mb-1 line-clamp-1">2025年山东公司管理创新优秀成果评选结果公示</h3>
+                    <span class="text-xs text-gray-400">06-03</span>
+                </div>
+                <div class="notice-item p-3 rounded-lg hover:bg-neutral transition-colors">
+                    <h3 class="text-base mb-1 line-clamp-1">关于开展2025年度员工健康体检的通知</h3>
+                    <span class="text-xs text-gray-400">06-01</span>
+                </div>
+                <div class="notice-item p-3 rounded-lg hover:bg-neutral transition-colors">
+                    <h3 class="text-base mb-1 line-clamp-1">端午节放假安排及相关工作要求</h3>
+                    <span class="text-xs text-gray-400">05-28</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 常用应用 -->
+        <div class="px-4 py-3 bg-white mt-3 mb-16">
+            <div class="app-category mb-6">
+                <h3 class="font-semibold text-secondary mb-3">OA办公</h3>
+                <div class="grid grid-cols-4 gap-3">
+                    <div class="app-item flex flex-col items-center p-3 rounded-lg hover:bg-neutral transition-colors">
+                        <div class="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+                            <span class="text-secondary font-medium">A</span>
+                        </div>
+                        <span class="text-xs text-secondary">公文管理</span>
+                    </div>
+                    <div class="app-item flex flex-col items-center p-3 rounded-lg hover:bg-neutral transition-colors">
+                        <div class="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+                            <span class="text-secondary font-medium">B</span>
+                        </div>
+                        <span class="text-xs text-secondary">审批流程</span>
+                    </div>
+                    <div class="app-item flex flex-col items-center p-3 rounded-lg hover:bg-neutral transition-colors">
+                        <div class="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+                            <span class="text-secondary font-medium">C</span>
+                        </div>
+                        <span class="text-xs text-secondary">会议管理</span>
+                    </div>
+                    <div class="app-item flex flex-col items-center p-3 rounded-lg hover:bg-neutral transition-colors">
+                        <div class="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+                            <span class="text-secondary font-medium">D</span>
+                        </div>
+                        <span class="text-xs text-secondary">任务分派</span>
+                    </div>
+                </div>
+            </div>
+            <div class="app-category">
+                <h3 class="font-semibold text-secondary mb-3">协同效率</h3>
+                <div class="grid grid-cols-4 gap-3">
+                    <div class="app-item flex flex-col items-center p-3 rounded-lg hover:bg-neutral transition-colors">
+                        <div class="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+                            <span class="text-secondary font-medium">E</span>
+                        </div>
+                        <span class="text-xs text-secondary">云盘</span>
+                    </div>
+                    <div class="app-item flex flex-col items-center p-3 rounded-lg hover:bg-neutral transition-colors">
+                        <div class="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+                            <span class="text-secondary font-medium">F</span>
+                        </div>
+                        <span class="text-xs text-secondary">即时通讯</span>
+                    </div>
+                    <div class="app-item flex flex-col items-center p-3 rounded-lg hover:bg-neutral transition-colors">
+                        <div class="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+                            <span class="text-secondary font-medium">G</span>
+                        </div>
+                        <span class="text-xs text-secondary">视频会议</span>
+                    </div>
+                    <div class="app-item flex flex-col items-center p-3 rounded-lg hover:bg-neutral transition-colors">
+                        <div class="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center mb-2">
+                            <span class="text-secondary font-medium">H</span>
+                        </div>
+                        <span class="text-xs text-secondary">日程共享</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 底部导航 -->
+        <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white border-t border-gray-100 py-3 px-0 z-50">
+            <div class="flex justify-around">
+                <div class="tab-item flex flex-col items-center py-1 px-4 text-primary">
+                    <i class="fa fa-home text-lg mb-1"></i>
+                    <span class="text-xs font-medium">首页</span>
+                </div>
+                <div class="tab-item flex flex-col items-center py-1 px-4 text-secondary hover:text-primary transition-colors">
+                    <i class="fa fa-rocket text-lg mb-1"></i>
+                    <span class="text-xs font-medium">AI+工具</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 更新时间
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        
+        setInterval(updateTime, 1000);
+        updateTime();
+        
+        // 文章轮播功能
+        const slider = document.getElementById('articleSlider');
+        const slides = slider.children.length;
+        let currentSlide = 0;
+        
+        function updateSlider() {
+            slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            // 更新指示点
+            document.querySelectorAll('.slider-dot').forEach((dot, index) => {
+                dot.classList.toggle('opacity-100', index === currentSlide);
+                dot.classList.toggle('opacity-50', index !== currentSlide);
+            });
+        }
+        
+        // 下一张
+        document.getElementById('nextSlide').addEventListener('click', () => {
+            currentSlide = (currentSlide + 1) % slides;
+            updateSlider();
+        });
+        
+        // 上一张
+        document.getElementById('prevSlide').addEventListener('click', () => {
+            currentSlide = (currentSlide - 1 + slides) % slides;
+            updateSlider();
+        });
+        
+        // 点击指示点
+        document.querySelectorAll('.slider-dot').forEach(dot => {
+            dot.addEventListener('click', () => {
+                currentSlide = parseInt(dot.dataset.index);
+                updateSlider();
+            });
+        });
+        
+        // 自动轮播
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % slides;
+            updateSlider();
+        }, 5000);
+        
+        // 为所有可点击项添加点击事件
+        document.querySelectorAll('.article-card, .todo-item, .app-item, .notice-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const title = this.querySelector('h3, .todo-name, .app-name, .notice-title')?.textContent || '对应内容';
+                alert(`跳转到${title}页面`);
+                // 实际应用中这里应该是路由跳转或打开新页面
+            });
+        });
+        
+        // 底部导航点击事件
+        document.querySelectorAll('.tab-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.tab-item').forEach(tab => {
+                    tab.classList.remove('text-primary');
+                    tab.classList.add('text-secondary');
+                });
+                this.classList.remove('text-secondary');
+                this.classList.add('text-primary');
+                const tabName = this.querySelector('.text-xs').textContent;
+                alert(`切换到${tabName}页面`);
+                // 实际应用中这里应该是路由跳转
+            });
+        });
+        
+        // 拦截a标签点击，处理小程序链接
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href && href.startsWith('#小程序://')) {
+                    e.preventDefault();
+                    // 在实际环境中，这里应该调用小程序跳转API
+                    alert(`即将跳转到小程序: ${href.replace('#小程序://', '')}`);
+                }
+            });
+        });
+    </script>
+</body>
+</html>    
