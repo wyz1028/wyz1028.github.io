@@ -102,8 +102,25 @@
             </button>
         </div>
         
-        <!-- 洗衣服务模块 -->
+        <!-- 餐厅排队信息模块 -->
         <div class="px-4 py-3 bg-white">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="font-bold text-lg">餐厅排队信息</h2>
+                <span class="text-primary text-sm">更多服务</span>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <a href="https://hy.10086.cn/hjq/ecfx?shareId=39973963" class="todo-item flex flex-col items-center p-4 rounded-xl shadow-sm hover:shadow-md transition-all bg-white border border-gray-100" target="_blank">
+                    <div class="w-14 h-14 rounded-xl bg-blue-50 flex items-center justify-center mb-3">
+                        <i class="fa fa-cutlery text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-base font-medium text-neutral-dark">餐厅排队</h3>
+                    <p class="text-xs text-secondary mt-1">实时查看，快速就餐</p>
+                </a>
+            </div>
+        </div>
+        
+        <!-- 洗衣服务模块 -->
+        <div class="px-4 py-3 bg-white mt-3">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="font-bold text-lg">洗衣服务</h2>
                 <span class="text-primary text-sm">更多服务</span>
@@ -308,8 +325,17 @@
                 const href = this.getAttribute('href');
                 if (href && href.startsWith('#小程序://')) {
                     e.preventDefault();
-                    // 在实际环境中，这里应该调用小程序跳转API
-                    alert(`即将跳转到小程序: ${href.replace('#小程序://', '')}`);
+                    const [appId, path] = href.replace('#小程序://', '').split('/');
+                    wx.navigateToMiniProgram({
+                        appId: appId,
+                        path: path,
+                        success: function(res) {
+                            console.log('跳转成功');
+                        },
+                        fail: function(err) {
+                            console.error('跳转失败', err);
+                        }
+                    });
                 }
             });
         });
