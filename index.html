@@ -119,6 +119,30 @@
             </div>
         </div>
         
+        <!-- 移动爱家服务模块 -->
+        <div class="px-4 py-3 bg-white mt-3">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="font-bold text-lg">家庭服务</h2>
+                <span class="text-primary text-sm">更多服务</span>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <a href="cmccaihome://home/service?module=home" class="todo-item flex flex-col items-center p-4 rounded-xl shadow-sm hover:shadow-md transition-all bg-white border border-gray-100" data-app="aijia">
+                    <div class="w-14 h-14 rounded-xl bg-blue-50 flex items-center justify-center mb-3">
+                        <i class="fa fa-home text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-base font-medium text-neutral-dark">移动爱家</h3>
+                    <p class="text-xs text-secondary mt-1">智能家居管理</p>
+                </a>
+                <a href="#小程序://依美特/FJyJ9XWz4CjhCRj" class="todo-item flex flex-col items-center p-4 rounded-xl shadow-sm hover:shadow-md transition-all bg-white border border-gray-100" target="_blank">
+                    <div class="w-14 h-14 rounded-xl bg-blue-50 flex items-center justify-center mb-3">
+                        <i class="fa fa-washer text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-base font-medium text-neutral-dark">伊美特洗衣</h3>
+                    <p class="text-xs text-secondary mt-1">专业洗护，次日送达</p>
+                </a>
+            </div>
+        </div>
+        
         <!-- 洗衣服务模块 -->
         <div class="px-4 py-3 bg-white mt-3">
             <div class="flex justify-between items-center mb-4">
@@ -324,19 +348,55 @@
             link.addEventListener('click', function(e) {
                 e.preventDefault();
                 const appUrl = this.getAttribute('href');
-                const fallbackUrl = 'https://hy.10086.cn/hjq/ecfx?shareId=39973963'; // 备用网页
-
+                const appName = this.dataset.app || '移动应用';
+                const fallbackUrl = 'https://www.10086.cn'; // 备用网页，可根据实际情况修改
+                
                 // 尝试跳转App
                 window.location.href = appUrl;
-
+                
                 // 如果跳转失败，则跳转到备用网页
                 setTimeout(function() {
                     if (!document.hidden) {
-                        window.location.href = fallbackUrl;
+                        if (confirm(`无法打开${appName}应用，是否前往下载页面？`)) {
+                            window.location.href = fallbackUrl;
+                        }
+                    }
+                }, 2000);
+            });
+        });
+        
+        // 移动爱家App跳转逻辑
+        document.querySelectorAll('[data-app="aijia"]').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // 移动爱家App的URL Scheme
+                const aijiaUrl = 'cmccaihome://home/service?module=home';
+                // 移动爱家App在应用商店的下载地址
+                const downloadUrl = 'https://a.app.qq.com/o/simple.jsp?pkgname=com.cmcc.aihome';
+                
+                // 记录点击时间
+                const clickTime = Date.now();
+                
+                // 尝试跳转App
+                window.location.href = aijiaUrl;
+                
+                // 检测是否成功跳转
+                setTimeout(() => {
+                    // 如果页面被隐藏（用户离开当前页面），说明成功跳转到App
+                    if (document.hidden) {
+                        return;
+                    }
+                    
+                    // 如果点击后2秒内页面未隐藏，说明跳转失败
+                    if (Date.now() - clickTime < 3000) {
+                        if (confirm('无法打开移动爱家App，是否前往下载？')) {
+                            window.location.href = downloadUrl;
+                        }
                     }
                 }, 2000);
             });
         });
     </script>
 </body>
-</html>    
+</html>
