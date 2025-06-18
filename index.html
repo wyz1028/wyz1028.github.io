@@ -109,7 +109,7 @@
                 <span class="text-primary text-sm">更多服务</span>
             </div>
             <div class="grid grid-cols-2 gap-3">
-                <a href="https://hy.10086.cn/hjq/ecfx?shareId=39973963" class="todo-item flex flex-col items-center p-4 rounded-xl shadow-sm hover:shadow-md transition-all bg-white border border-gray-100" target="_blank">
+                <a href="cmccaihome://restaurant/queue?shareId=39973963" class="todo-item flex flex-col items-center p-4 rounded-xl shadow-sm hover:shadow-md transition-all bg-white border border-gray-100">
                     <div class="w-14 h-14 rounded-xl bg-blue-50 flex items-center justify-center mb-3">
                         <i class="fa fa-cutlery text-primary text-xl"></i>
                     </div>
@@ -319,24 +319,22 @@
             });
         });
         
-        // 拦截a标签点击，处理小程序链接
-        document.querySelectorAll('a').forEach(link => {
+        // 拦截a标签点击，处理App跳转
+        document.querySelectorAll('a[href^="cmccaihome://"]').forEach(link => {
             link.addEventListener('click', function(e) {
-                const href = this.getAttribute('href');
-                if (href && href.startsWith('#小程序://')) {
-                    e.preventDefault();
-                    const [appId, path] = href.replace('#小程序://', '').split('/');
-                    wx.navigateToMiniProgram({
-                        appId: appId,
-                        path: path,
-                        success: function(res) {
-                            console.log('跳转成功');
-                        },
-                        fail: function(err) {
-                            console.error('跳转失败', err);
-                        }
-                    });
-                }
+                e.preventDefault();
+                const appUrl = this.getAttribute('href');
+                const fallbackUrl = 'https://hy.10086.cn/hjq/ecfx?shareId=39973963'; // 备用网页
+
+                // 尝试跳转App
+                window.location.href = appUrl;
+
+                // 如果跳转失败，则跳转到备用网页
+                setTimeout(function() {
+                    if (!document.hidden) {
+                        window.location.href = fallbackUrl;
+                    }
+                }, 2000);
             });
         });
     </script>
