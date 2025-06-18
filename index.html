@@ -109,7 +109,9 @@
                 <span class="text-primary text-sm">更多服务</span>
             </div>
             <div class="grid grid-cols-2 gap-3">
-                <a href="https://cloud.hjq.komect.com/appdl/index.html" class="todo-item flex flex-col items-center p-4 rounded-xl shadow-sm hover:shadow-md transition-all bg-white border border-gray-100" target="_blank">
+                <a href="cmccaihome://restaurant/queue?shareId=39973963" 
+                   onclick="window.location.href='https://cloud.hjq.komect.com/appdl/index.html'; return false;"
+                   class="todo-item flex flex-col items-center p-4 rounded-xl shadow-sm hover:shadow-md transition-all bg-white border border-gray-100">
                     <div class="w-14 h-14 rounded-xl bg-blue-50 flex items-center justify-center mb-3">
                         <i class="fa fa-cutlery text-primary text-xl"></i>
                     </div>
@@ -257,6 +259,23 @@
                 alert(`切换到${tabName}页面`);
                 // 实际应用中这里应该是路由跳转
             });
+        });
+
+        // 拦截点击事件，处理 App 跳转
+        document.querySelector('a[href^="cmccaihome://"]').addEventListener('click', function(e) {
+            e.preventDefault();
+            const appUrl = this.getAttribute('href');
+            const fallbackUrl = 'https://cloud.hjq.komect.com/appdl/index.html'; // 备用下载页
+
+            // 尝试跳转 App
+            window.location.href = appUrl;
+
+            // 如果 2 秒后未跳转成功，则跳转到下载页
+            setTimeout(function() {
+                if (!document.hidden) {
+                    window.location.href = fallbackUrl;
+                }
+            }, 2000);
         });
     </script>
 </body>
